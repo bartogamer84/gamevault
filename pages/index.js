@@ -66,30 +66,37 @@ function Chatbot() {
   }, [messages]);
 
   const send = async () => {
-    const text = input.trim();
-    if (!text || loading) return;
-    setInput("");
+  const text = input.trim();
+  if (!text || loading) return;
+  setInput("");
 
-    const newMessages = [...messages, { role: "user", content: text }];
-    setMessages(newMessages);
-    setLoading(true);
+  const userMessage = { role: "user", content: text };
+  const updatedMessages = [...messages, userMessage];
+  setMessages(updatedMessages);
+  setLoading(true);
 
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: newMessages.filter((m) => m.role !== "system"),
-        }),
-      });
-      const data = await res.json();
-      setMessages([...newMessages, { role: "assistant", content: data.reply || "Error al responder." }]);
-    } catch {
-      setMessages([...newMessages, { role: "assistant", content: "⚠️ Error de conexión. Intenta de nuevo." }]);
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        // ✅ Cambio clave: enviar SOLO los mensajes que sean "user" o "assistant"
+        // (sin filtrar por role !== "system", porque nunca tenés role system acá)
+        messages: updatedMessages.filter(m => m.role !== "system")
+      }),
+    });
+    const data = await res.json();
+    if (data.reply) {
+      setMessages([...updatedMessages, { role: "assistant", content: data.reply }]);
+    } else {
+      setMessages([...updatedMessages, { role: "assistant", content: "❌ Error del servidor. Intenta de nuevo." }]);
     }
-    setLoading(false);
-  };
-
+  } catch (error) {
+    console.error("Fetch error:", error);
+    setMessages([...updatedMessages, { role: "assistant", content: "⚠️ Error de conexión. Revisa tu red." }]);
+  }
+  setLoading(false);
+};
   return (
     <>
       {/* Botón flotante */}

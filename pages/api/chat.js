@@ -58,4 +58,12 @@ Si te preguntan algo fuera de videojuegos o la tienda, redirige amablemente al t
     console.error("Error interno del chat:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
+
+  // Después de const data = await response.json();
+console.log("Respuesta completa de OpenRouter:", JSON.stringify(data, null, 2));
+
+// Y mejorá el mensaje de error:
+const reply = data.choices?.[0]?.message?.content || 
+              data.error?.message || 
+              "Lo siento, no pude procesar tu mensaje.";
 }

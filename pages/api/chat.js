@@ -35,7 +35,7 @@ Si te preguntan algo fuera de videojuegos o la tienda, redirige amablemente al t
         "X-Title": "GameVault",
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.1-8b-instruct:free",
+        model: "mistralai/mistral-7b-instruct",
         messages: [
           { role: "system", content: systemPrompt },
           ...messages,

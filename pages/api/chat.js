@@ -58,10 +58,4 @@ Si te preguntan algo fuera de videojuegos o la tienda, redirige amablemente al t
     console.error("Error interno del chat:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
-
-    res.status(200).json({ reply });
-  } catch (error) {
-    console.error("Chat error:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
 }

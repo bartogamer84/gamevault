@@ -1,0 +1,23 @@
+{
+  "name": "gamevault",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "@stripe/stripe-js": "^3.4.1",
+    "@stripe/react-stripe-js": "^2.7.1",
+    "stripe": "^15.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3"
+  }
+}
